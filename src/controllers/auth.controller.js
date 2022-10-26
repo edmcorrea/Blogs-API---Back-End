@@ -1,11 +1,13 @@
 const { authService } = require('../services');
 
 const login = async (req, res) => {
-  const { email, password } = await authService.validateBody(req.body);
+  const { type, message } = await authService.autenticate(req.body);
+
+  if (type) {
+    return res.status(400).json({ message });
+  }
   
-  const token = await authService.autenticate({ email, password });
-  
-  res.status(200).json(token);
+  res.status(200).json({ token: message });
 };
 
 module.exports = {

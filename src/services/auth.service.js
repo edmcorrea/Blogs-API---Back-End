@@ -1,40 +1,21 @@
-const User = require('../models/User');
+const { User } = require('../models');
 const { generateToken } = require('../utils/JWT');
 
-const { validateEmail } = require('./validation/schema');
-
-const validateBody = (body) => {
-  const { error, value } = validateEmail.validate(body);
-
-  if (error) throw error;
-
-  return value;
-};
-
 const autenticate = async ({ email, password }) => {
-  // const login = await User.findOne({
-  //   attributes: ['id', 'email', 'name'],
-  //   where: { email, password } });
-
-  const login = await User.findAll({ where: { email, password } });
-
-    // console.log(login);
+  const login = await User.findOne({
+    where: { email, password } });
 
   if (!login) {
-    const status = 400;
-    const message = 'Invalid fields';
-
-    const error = { status, message };
-
-    throw error;
+    return { type: 'INVALID_LOGIN', message: 'Invalid fields' };
   }
 
-  const token = generateToken(login.dataValues);
+  const { password: _, ...userWithoutPassword } = login.dataValues;
 
-  return { token };
+  const token = generateToken(userWithoutPassword);
+
+  return { type: null, message: token };
 };
 
 module.exports = {
-  validateBody,
   autenticate,
 };
