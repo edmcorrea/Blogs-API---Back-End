@@ -1,7 +1,7 @@
-const { validateEmail } = require('../services/validation/schema');
+const { schemaLogin } = require('../services/validation/schema');
 
 const validateLogin = (req, res, next) => {
-  const { error } = validateEmail.validate(req.body);
+  const { error } = schemaLogin.validate(req.body);
 
   const { password } = req.body;
 
