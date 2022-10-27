@@ -5,6 +5,16 @@ const getUsers = async (_req, res) => {
  return res.status(200).json(users);
 };
 
+const findById = async (req, res) => {
+  const { id } = req.params;
+
+  const data = await userService.findById(id);
+
+  if (!data) return res.status(404).json({ message: 'User does not exist' });
+  
+  return res.status(200).json(data);
+};
+
 const createUser = async (req, res) => {
   const { type, message } = await userService.createUser(req.body);
 
@@ -16,5 +26,6 @@ const createUser = async (req, res) => {
 
 module.exports = {
   getUsers,
+  findById,
   createUser,
 };
