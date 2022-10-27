@@ -5,15 +5,15 @@ const getPosts = async (_req, res) => {
  return res.status(200).json(posts);
 };
 
-// const findById = async (req, res) => {
-//   const { id } = req.params;
+const findById = async (req, res) => {
+  const { id } = req.params;
 
-//   const data = await userService.findById(id);
+  const data = await postService.findById(id);
 
-//   if (!data) return res.status(404).json({ message: 'User does not exist' });
+  if (!data) return res.status(404).json({ message: 'Post does not exist' });
   
-//   return res.status(200).json(data);
-// };
+  return res.status(200).json(data);
+};
 
 // const createPost = async (req, res) => {
 //   const { type, message } = await postService.createPost(req.body);
@@ -26,6 +26,6 @@ const getPosts = async (_req, res) => {
 
 module.exports = {
   getPosts,
-  // findById,
+  findById,
   // createPost,
 };

@@ -19,18 +19,23 @@ const getPosts = async () => {
   return results;
 };
 
-// const findById = async (id) => {
-// try {
-//   const data = await User.findOne({
-//     where: { id },
-//     attributes: { exclude: ['password'] },
-//   });
-
-//   return data;
-// } catch (error) {
-//   return error;
-// }
-// };
+const findById = async (id) => {
+  const data = await BlogPost.findOne({
+    where: { id },
+    include: [
+      {
+        model: User,
+        as: 'user',
+        attributes: { exclude: ['password'] },
+      },
+      {
+        model: Category,
+        as: 'categories',
+      },
+    ],
+  });
+  return data;
+};
 
 // const createPost = async ({ title, content, categoryIds }) => {
 //   // const validateCategory = await User.findOne({ where: { email } });
@@ -47,5 +52,5 @@ const getPosts = async () => {
 
 module.exports = {
   getPosts,
-  // findById,
+  findById,
 };
