@@ -7,6 +7,10 @@ const imageSchema = Joi.string();
 
 const nameCatSchema = Joi.string().required();
 
+const titleSchema = Joi.string().required();
+const contentSchema = Joi.string().required();
+const catIdSchema = Joi.array().required();
+
 const schemaLogin = Joi.object({
   email: emailSchema,
   password: passSchema,
@@ -23,8 +27,15 @@ const schemaCategory = Joi.object({
   name: nameCatSchema,
 });
 
+const schemaPost = Joi.object({
+  title: titleSchema,
+  content: contentSchema,
+  categoryIds: catIdSchema,
+});
+
 module.exports = {
   schemaLogin,
   schemaNewUser,
   schemaCategory,
+  schemaPost,
 };
