@@ -6,7 +6,7 @@ const { validateToken } = require('../midlleware/validateToken');
 
 const router = express.Router();
 
-// router.get('/', validateToken, userController.getUsers);
+router.get('/', validateToken, categoryController.getCategories);
 router.post('/', validateToken, validateCategory, categoryController.createCategory);
 // router.get('/:id', validateToken, userController.findById);
 
