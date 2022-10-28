@@ -12,7 +12,6 @@ const validateToken = async (req, res, next) => {
   }
 
   const user = await JWT.verifyToken(token);
-  console.log('CONSOLELOGuser', user);
 
   if (user.type === 'EXPIRED_INVALID') {
     return res.status(401).json({ message: user.message });

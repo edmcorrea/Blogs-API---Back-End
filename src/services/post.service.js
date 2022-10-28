@@ -37,6 +37,13 @@ const findById = async (id) => {
   return data;
 };
 
+const checkUserPost = async (id, userId) => BlogPost.findOne({ where: { id, userId } });
+
+const updateById = async ({ title, content }, id) => {
+  const updated = await BlogPost.update({ title, content }, { where: { id } });
+  return { type: null, message: updated };
+};
+
 // const createPost = async ({ title, content, categoryIds }) => {
 //   // const validateCategory = await User.findOne({ where: { email } });
 
@@ -53,4 +60,6 @@ const findById = async (id) => {
 module.exports = {
   getPosts,
   findById,
+  checkUserPost,
+  updateById,
 };

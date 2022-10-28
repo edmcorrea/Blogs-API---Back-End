@@ -4,15 +4,12 @@ const jwt = require('jsonwebtoken');
 const TOKEN_SECRET_KEY = process.env.JWT_SECRET || 'paocomqueijo';
 
 const generateToken = (payload) => {
-  // const payload = { id, name, email };
-
   const jwtConfig = {
     expiresIn: '7d',
     algorithm: 'HS256',
   };
-
-  const token = jwt.sign({ payload }, TOKEN_SECRET_KEY, jwtConfig); // TOKEN -> ABC.1234.XYZ
-
+  // console.log('PAYLOAD', payload);
+  const token = jwt.sign({ ...payload }, TOKEN_SECRET_KEY, jwtConfig); // TOKEN -> ABC.1234.XYZ
   return token;
 };
 
@@ -23,13 +20,15 @@ const verifyToken = (token) => {
   } catch (_error) {
     return { type: 'EXPIRED_INVALID', message: 'Expired or invalid token' };
   }
-  // const user = jwt.verify(token, TOKEN_SECRET_KEY);
-  // console.log('CONSOLE', user);
+};
 
-  // return user;
+const decodedToken = (token) => {
+  const decoded = jwt.verify(token, TOKEN_SECRET_KEY);
+  return decoded.id;
 };
 
 module.exports = {
   generateToken,
   verifyToken,
+  decodedToken,
 };

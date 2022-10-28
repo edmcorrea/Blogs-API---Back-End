@@ -33,9 +33,15 @@ const schemaPost = Joi.object({
   categoryIds: catIdSchema,
 });
 
+const updateSchemaPost = Joi.object({
+  title: titleSchema,
+  content: contentSchema,
+});
+
 module.exports = {
   schemaLogin,
   schemaNewUser,
   schemaCategory,
   schemaPost,
+  updateSchemaPost,
 };
