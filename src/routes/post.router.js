@@ -10,6 +10,6 @@ const router = express.Router();
 router.get('/', validateToken, postController.getPosts);
 // router.post('/', validatePost, postController.createPost);
 router.get('/:id', validateToken, postController.findById);
-router.put('/:id', updateValidatePost, postController.updateById);
+router.put('/:id', validateToken, updateValidatePost, postController.updateById);
 
 module.exports = router;

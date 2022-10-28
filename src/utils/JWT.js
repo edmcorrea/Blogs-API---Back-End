@@ -23,8 +23,12 @@ const verifyToken = (token) => {
 };
 
 const decodedToken = (token) => {
-  const decoded = jwt.verify(token, TOKEN_SECRET_KEY);
-  return decoded.id;
+  try {
+    const decoded = jwt.verify(token, TOKEN_SECRET_KEY);
+    return decoded.id;
+  } catch (_error) {
+    return { type: 'EXPIRED_INVALID', message: 'Expired or invalid token' };
+  }
 };
 
 module.exports = {

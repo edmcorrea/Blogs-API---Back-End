@@ -24,7 +24,7 @@ const updateById = async (req, res) => {
 
   const checked = await postService.checkUserPost(id, decodedId);
    if (!checked) {
-    return res.status(400).json({ message: 'Unauthorized user' });
+    return res.status(401).json({ message: 'Unauthorized user' });
   }
 
   const { type, message } = await postService.updateById(req.body, id);
