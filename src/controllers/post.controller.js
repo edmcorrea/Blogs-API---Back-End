@@ -38,18 +38,31 @@ const updateById = async (req, res) => {
   return res.status(200).json(data);
 };
 
-// const createPost = async (req, res) => {
-//   const { type, message } = await postService.createPost(req.body);
+const createPost = async (req, res) => {
+  const { categoryIds } = req.body;
 
-//   if (type === 'ALREADY_EXISTS') {
-//     return res.status(409).json({ message });
-//   }
-//   return res.status(201).json({ token: message });
-//  };
+  const checkCategories = await Promise.all(categoryIds
+    .map(async (categoryId) =>
+      postService.checkCategoriesToPost(categoryId)));
+
+  if (checkCategories.includes(null)) {
+    return res.status(400).json({ message: 'one or more "categoryIds" not found' });
+  }
+
+  // FALTA A FUNCAO DE CRIACAO DOS DOS POSTS
+
+  // const { type, message } = await postService.createPost(req.body);
+
+  // if (type === 'ALREADY_EXISTS') {
+  //   return res.status(409).json({ message });
+  // }
+  // return res.status(201).json({ token: message });
+  return res.status(201).json({ return: 'FALTA A FUNCAO DE CRIACAO DOS DOS POSTS' });
+ };
 
 module.exports = {
   getPosts,
   findById,
   updateById,
-  // createPost,
+  createPost,
 };

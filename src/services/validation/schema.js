@@ -9,7 +9,7 @@ const nameCatSchema = Joi.string().required();
 
 const titleSchema = Joi.string().required();
 const contentSchema = Joi.string().required();
-const catIdSchema = Joi.array().required();
+const catIdSchema = Joi.array().items(Joi.number()).required();
 
 const schemaLogin = Joi.object({
   email: emailSchema,

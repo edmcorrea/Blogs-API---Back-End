@@ -44,6 +44,10 @@ const updateById = async ({ title, content }, id) => {
   return { type: null, message: updated };
 };
 
+const checkCategoriesToPost = async (id) => {
+  const checkCategory = await Category.findOne({ where: { id } });
+  return checkCategory;
+};
 // const createPost = async ({ title, content, categoryIds }) => {
 //   // const validateCategory = await User.findOne({ where: { email } });
 
@@ -61,5 +65,6 @@ module.exports = {
   getPosts,
   findById,
   checkUserPost,
+  checkCategoriesToPost,
   updateById,
 };
