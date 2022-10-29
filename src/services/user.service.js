@@ -33,8 +33,18 @@ const createUser = async ({ displayName, email, password, image }) => {
   return { type: null, message: token };
 };
 
+const deleteUser = async (id) => {
+  try {
+    const data = await User.destroy({ where: { id } });
+    return data;
+  } catch (error) {
+    return error;
+  }
+  };
+
 module.exports = {
   getUsers,
   findById,
   createUser,
+  deleteUser,
 };
