@@ -1,9 +1,9 @@
-const Sequelize = require('sequelize');
-const config = require('../config/config');
+// const Sequelize = require('sequelize');
+// const config = require('../config/config');
 
-const env = process.env.NODE_ENV || 'development';
+// const env = process.env.NODE_ENV || 'development';
 
-const sequelize = new Sequelize(config[env]);
+// const sequelize = new Sequelize(config[env]);
 const { BlogPost, Category, User, PostCategory } = require('../models');
 
 const getPosts = async () => {

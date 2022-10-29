@@ -79,10 +79,21 @@ const createPost = async (req, res) => {
   return res.status(204).end();
 };
 
+const searchByQuery = async (req, res) => {
+  const { q } = req.query;
+
+  const posts = await postService.getPosts();
+  
+  const filterPosts = await posts.filter(({ title, content }) => title.includes(q) || content.includes(q));
+  
+  return res.status(200).json(filterPosts);
+};
+
 module.exports = {
   getPosts,
   findById,
   updateById,
   createPost,
   deleteById,
+  searchByQuery,
 };

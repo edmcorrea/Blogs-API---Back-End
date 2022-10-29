@@ -8,6 +8,7 @@ const { validateToken } = require('../midlleware/validateToken');
 const router = express.Router();
 
 router.get('/', validateToken, postController.getPosts);
+router.get('/search', validateToken, postController.searchByQuery);
 router.post('/', validatePost, postController.createPost);
 router.get('/:id', validateToken, postController.findById);
 router.put('/:id', validateToken, updateValidatePost, postController.updateById);
