@@ -84,7 +84,8 @@ const searchByQuery = async (req, res) => {
 
   const posts = await postService.getPosts();
   
-  const filterPosts = await posts.filter(({ title, content }) => title.includes(q) || content.includes(q));
+  const filterPosts = await posts
+  .filter(({ title, content }) => title.includes(q) || content.includes(q));
   
   return res.status(200).json(filterPosts);
 };
