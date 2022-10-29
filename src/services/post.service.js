@@ -1,6 +1,10 @@
-const { BlogPost, Category, User } = require('../models');
-// const PostCategory = require('../models/PostCategory');
-// const { generateToken } = require('../utils/JWT');
+const Sequelize = require('sequelize');
+const config = require('../config/config');
+
+const env = process.env.NODE_ENV || 'development';
+
+const sequelize = new Sequelize(config[env]);
+const { BlogPost, Category, User, PostCategory } = require('../models');
 
 const getPosts = async () => {
   const results = await BlogPost.findAll({
@@ -48,18 +52,33 @@ const checkCategoriesToPost = async (id) => {
   const checkCategory = await Category.findOne({ where: { id } });
   return checkCategory;
 };
-// const createPost = async ({ title, content, categoryIds }) => {
-//   // const validateCategory = await User.findOne({ where: { email } });
 
-//   // if (validateEmail) {
-//   //   return { type: 'ALREADY_EXISTS', message: 'User already registered' };
-//   // }
-//   const { dataValues } = await BlogPost
-//   .create({ title, content, categoryIds });
+const createPost = async ({ title, content, categoryIds }, userId, date) => {
+  // console.log(title, content, categoryIds);
+  try {
+    // const result = await sequelize.transaction(async (t) => {
+      const postCreated = await Promise.all(BlogPost.create(
+        { title, content, userId, updated: date, published: date },
+        // { transaction: t },
+        ));
 
-//   const token = generateToken(userWithoutPassword);
-//   return { type: null, message: token };
-// };
+        console.log('postCreatedd', postCreated);
+      await Promise.all(categoryIds.map(async (categoryId) => (PostCategory.create(
+        { categoryId, postId: postCreated.dataValues.id },
+        // { transaction: t },
+      ))));
+      return postCreated.dataValues;
+    // });
+    // return result;
+  } catch (error) {
+    return { type: null, message: 'error' };
+  }
+};
+
+const deleteById = async (id) => {
+  const data = await BlogPost.destroy({ where: { id } });
+  return data;
+};
 
 module.exports = {
   getPosts,
@@ -67,4 +86,6 @@ module.exports = {
   checkUserPost,
   checkCategoriesToPost,
   updateById,
+  createPost,
+  deleteById,
 };
