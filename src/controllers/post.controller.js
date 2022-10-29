@@ -53,10 +53,6 @@ const createPost = async (req, res) => {
 
   const postCreated = await postService.createPost(req.body, decodedId, date);
 
-  // if (type === 'ALREADY_EXISTS') {
-  //   return res.status(409).json({ message });
-  // }
-  // return res.status(201).json({ token: message });
   return res.status(201).json({ return: postCreated });
  };
 
