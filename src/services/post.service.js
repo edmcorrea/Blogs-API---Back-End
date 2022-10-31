@@ -1,25 +1,25 @@
-// const Sequelize = require('sequelize');
-// const config = require('../config/config');
+const Sequelize = require('sequelize');
+const config = require('../config/config');
 
-// const env = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV || 'development';
 
-// const sequelize = new Sequelize(config[env]);
+const sequelize = new Sequelize(config[env]);
 const { BlogPost, Category, User, PostCategory } = require('../models');
 
 const getPosts = async () => {
   const results = await BlogPost.findAll({
-    // include: { all: true, attributes: { exclude: ['password'] } },
-    include: [
-      {
-        model: User,
-        as: 'user',
-        attributes: { exclude: ['password'] },
-      },
-      {
-        model: Category,
-        as: 'categories',
-      },
-    ],
+    include: { all: true, attributes: { exclude: ['password'] } },
+    // include: [
+    //   {
+    //     model: User,
+    //     as: 'user',
+    //     attributes: { exclude: ['password'] },
+    //   },
+    //   {
+    //     model: Category,
+    //     as: 'categories',
+    //   },
+    // ],
   });
   return results;
 };
@@ -54,23 +54,20 @@ const checkCategoriesToPost = async (id) => {
   return checkCategory;
 };
 
-const createPost = async ({ title, content, categoryIds }, userId, date) => {
-  // console.log(title, content, categoryIds);
+const createPost = async (post, categoryIds) => {
   try {
-    // const result = await sequelize.transaction(async (t) => {
-      const postCreated = await Promise.all(BlogPost.create(
-        { title, content, userId, updated: date, published: date },
-        // { transaction: t },
-        ));
+    const result = await sequelize.transaction(async (t) => {
+      const postCreated = await BlogPost.create(post, { transaction: t });
 
-        console.log('postCreatedd', postCreated);
-      await Promise.all(categoryIds.map(async (categoryId) => (PostCategory.create(
-        { categoryId, postId: postCreated.dataValues.id },
-        // { transaction: t },
-      ))));
-      return postCreated.dataValues;
-    // });
-    // return result;
+        await Promise.all(categoryIds
+          .map(async (categoryId) => (PostCategory.create(
+          { categoryId, postId: postCreated.dataValues.id },
+          { transaction: t },
+        ))));
+        return postCreated.dataValues;
+      });
+      console.log(result);
+      return result;
   } catch (error) {
     return { type: null, message: 'error' };
   }

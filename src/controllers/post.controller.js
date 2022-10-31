@@ -42,6 +42,8 @@ const createPost = async (req, res) => {
   const { categoryIds } = req.body;
   const decodedId = decodedToken(req.headers.authorization);
   const date = new Date();
+  const post = { ...req.body, userId: decodedId, published: date, updated: date };
+  // console.log(post);
 
   const checkCategories = await Promise.all(categoryIds
     .map(async (categoryId) =>
@@ -51,9 +53,9 @@ const createPost = async (req, res) => {
     return res.status(400).json({ message: 'one or more "categoryIds" not found' });
   }
 
-  const postCreated = await postService.createPost(req.body, decodedId, date);
+  const postCreated = await postService.createPost(post, categoryIds);
 
-  return res.status(201).json({ return: postCreated });
+  return res.status(201).json(postCreated);
  };
 
  const deleteById = async (req, res) => {
