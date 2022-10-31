@@ -8,6 +8,7 @@ const { BlogPost, Category, User, PostCategory } = require('../models');
 
 const getPosts = async () => {
   const results = await BlogPost.findAll({
+    // include: { all: true, attributes: { exclude: ['password'] } },
     include: [
       {
         model: User,
