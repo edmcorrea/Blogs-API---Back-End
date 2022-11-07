@@ -12,12 +12,6 @@
 -->
 
 <!-- PROJECT LOGO -->
-<div align="center">
-
-  <h3 align="center">Blogs API</h3>
-  
-</div>
-
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -76,6 +70,10 @@ Depois de criar muita query SQL na unha, tive o prazer de aprender utilizar esse
      <td width="80px" align="center">
       <span><strong>Express</strong></span><br>
       <img height="32" src="https://user-images.githubusercontent.com/98132078/200321834-cc7ba953-4bb0-47f3-b0bb-f679cc7f6d80.png">
+    </td>
+    <td width="80px" align="center">
+      <span><strong>Docker</strong></span><br>
+      <img height="32" src="https://user-images.githubusercontent.com/98132078/200325516-24a48ef3-0baa-4dad-82a6-3891630b74aa.png">
     </td>
     <td width="80px" align="center">
       <span><strong>MySQL</strong></span><br>
