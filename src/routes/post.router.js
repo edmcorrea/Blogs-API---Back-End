@@ -1,7 +1,6 @@
 const express = require('express');
 const { postController } = require('../controllers');
 const { updateValidatePost, validatePost } = require('../midlleware/validatePost');
-// const { validateCategory } = require('../midlleware/validateCategory');
 
 const { validateToken } = require('../midlleware/validateToken');
 
