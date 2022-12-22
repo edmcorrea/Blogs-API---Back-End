@@ -5,7 +5,6 @@ const userRouter = require('./user.router');
 const authRouter = require('./auth.router');
 
 const routers = express.Router();
-// routers.use(authMiddleware.validateToken);
 
 routers.use('/login', authRouter);
 
